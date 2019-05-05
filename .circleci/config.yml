@@ -48,3 +48,7 @@ jobs:
       - store_artifacts:
           path: arm7-linux-rasp
 
+      - run:
+          name: Push to Artifactory
+          command: |
+            curl -T arm6-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:0.1.0" https://api.bintray.com/content/masato-ka/rasp/arm6-linux-rasp

@@ -13,7 +13,7 @@ func Getrepo(path string, dst string) (string, error) {
 	buffer := &bytes.Buffer{}
 	ps, err := Execution("git", args, dst, os.Stdout, buffer)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed run git command %s\n\n", err)
+		fmt.Fprintf(os.Stderr, "Failed run git command %+v \n", err)
 		return "", err
 	}
 	output := buffer.String()
@@ -21,7 +21,7 @@ func Getrepo(path string, dst string) (string, error) {
 
 	abs, err := filepath.Abs(dst)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed get dst abs path.: %s\n", err)
+		fmt.Fprintf(os.Stderr, "Failed get dst abs path.: %+v \n", err)
 		return "", err
 	}
 	fullpath := filepath.Join(abs, folder)

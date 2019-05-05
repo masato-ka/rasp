@@ -33,20 +33,20 @@ func (b *BuildCmd) SetFlags(f *flag.FlagSet) {
 func (b *BuildCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 
 	if b.repo == "" {
-		fmt.Fprintf(os.Stderr, "Usage error. plea\n")
+		fmt.Fprintf(os.Stderr, "Usage error. \n")
 		return subcommands.ExitUsageError
 	}
 
 	p, err := lib.Getrepo(b.repo, b.dst)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed fetch resource from repo : %s\n", b.repo)
+		fmt.Fprintf(os.Stderr, "Failed fetch resource from repo : %+v \n", b.repo)
 		return subcommands.ExitFailure
 	}
 
 	_, buildErr := b.build(p)
 
 	if buildErr != nil {
-		fmt.Fprintf(os.Stderr, "Failed build: %s\n", err)
+		fmt.Fprintf(os.Stderr, "Failed build: %+v \n", err)
 		return subcommands.ExitFailure
 	}
 

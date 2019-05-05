@@ -9,9 +9,7 @@ jobs:
       - image: circleci/golang:1.12.4
         environment:
           GO111MODULE: "on"
-          GOOS: linux
-          GOARCH: arm
-          GOARM: 7
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -32,12 +30,16 @@ jobs:
           name: build for ARM6
           command: go build -o arm6-linux-rasp
           environment:
+            GOOS: linux
+            GOARCH: arm
             GOARM: 6
 
       - run:
           name: build for ARM7
           command: go build -o arm7-linux-rasp
           environment:
+            GOOS: linux
+            GOARCH: arm
             GOARM: 7
 
       - store_artifacts:

@@ -62,6 +62,12 @@ func (b *BuildCmd) build(p string) (string, error) {
 	cmd := ""
 	var args []string
 
+	if b.cmd != "" {
+		s := strings.Split(b.cmd, " ")
+		cmd = s[0]
+		args = s[1:]
+	}
+
 	if d == "python" {
 		cmd = "pip"
 		args = append(args, "install", "-e", ".")
@@ -72,16 +78,12 @@ func (b *BuildCmd) build(p string) (string, error) {
 		args = append(args, "build")
 	}
 
-	if d != "" {
-		s := strings.Split(b.cmd, " ")
-		cmd = s[0]
-		args = s[1:]
+	if d != "" || b.cmd != "" {
 		ps, err := lib.Execution(cmd, args, p, os.Stdout, os.Stderr)
 		if err != nil {
 			return "", err
 		}
 		return ps.String(), nil
-
 	}
 
 	return "pass", nil

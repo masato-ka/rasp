@@ -7,6 +7,7 @@ import (
 	"github.com/google/subcommands"
 	"os"
 	"rasp/lib"
+	"strings"
 )
 
 type BuildCmd struct {
@@ -72,6 +73,9 @@ func (b *BuildCmd) build(p string) (string, error) {
 	}
 
 	if d != "" {
+		s := strings.Split(b.cmd, " ")
+		cmd = s[0]
+		args = s[1:]
 		ps, err := lib.Execution(cmd, args, p, os.Stdout, os.Stderr)
 		if err != nil {
 			return "", err

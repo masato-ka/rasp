@@ -14,6 +14,7 @@ type BuildCmd struct {
 	repo string
 	cmd  string
 	dst  string
+	skip bool
 }
 
 func (*BuildCmd) Name() string     { return "build" }
@@ -28,6 +29,7 @@ func (b *BuildCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&b.repo, "repo", "", "repository path")
 	f.StringVar(&b.cmd, "cmd", "", "command")
 	f.StringVar(&b.dst, "dst", "./", "distination")
+	f.BoolVar(&b.skip, "skip-build", false, "Skip build flag")
 }
 
 func (b *BuildCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
@@ -43,14 +45,14 @@ func (b *BuildCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 		return subcommands.ExitFailure
 	}
 
-	_, buildErr := b.build(p)
-
-	if buildErr != nil {
-		fmt.Fprintf(os.Stderr, "Failed build: %+v \n", err)
-		return subcommands.ExitFailure
+	if !b.skip {
+		_, buildErr := b.build(p)
+		if buildErr != nil {
+			fmt.Fprintf(os.Stderr, "Failed build: %+v \n", err)
+			return subcommands.ExitFailure
+		}
+		fmt.Fprintf(os.Stdout, "complete build.\n")
 	}
-
-	fmt.Fprintf(os.Stdout, "complete build.\n")
 
 	return subcommands.ExitSuccess
 }

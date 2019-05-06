@@ -42,14 +42,25 @@ jobs:
             GOARCH: arm
             GOARM: 7
 
+      - run:
+          name: build for native
+          command: go build
+
+      - run:
+          name: get version.
+          command: |
+            VERSION=$(./rasp -version | grep -o -E \[0-9]+.\[0-9]+.\[0-9]+)
+
       - store_artifacts:
           path: arm6-linux-rasp
 
       - store_artifacts:
           path: arm7-linux-rasp
 
+
+
       - run:
           name: Push to Artifactory
           command: |
-            curl -T arm6-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:0.1.0" https://api.bintray.com/content/masato-ka/rasp/arm6-linux-rasp
-            curl -T arm7-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:0.1.0" https://api.bintray.com/content/masato-ka/rasp/arm7-linux-rasp
+            curl -T arm6-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:`${VERSION}`" https://api.bintray.com/content/masato-ka/rasp/arm6-linux-rasp
+            curl -T arm7-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:`${VERSION}`" https://api.bintray.com/content/masato-ka/rasp/arm7-linux-rasp

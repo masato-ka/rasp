@@ -62,5 +62,5 @@ jobs:
       - run:
           name: Push to Artifactory
           command: |
-            curl -T arm6-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:`${VERSION}`" https://api.bintray.com/content/masato-ka/rasp/arm6-linux-rasp
-            curl -T arm7-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version:`${VERSION}`" https://api.bintray.com/content/masato-ka/rasp/arm7-linux-rasp
+            curl -T arm6-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version: ${VERSION}" https://api.bintray.com/content/masato-ka/rasp/arm6-linux-rasp
+            curl -T arm7-linux-rasp -u$ARTIFACTORY_USER:$ARTIFACTORY_APIKEY -H "X-Bintray-Package:rasp" -H "X-Bintray-Version: ${VERSION}" https://api.bintray.com/content/masato-ka/rasp/arm7-linux-rasp
